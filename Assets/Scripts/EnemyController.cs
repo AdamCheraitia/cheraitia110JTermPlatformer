@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     public Transform[] Path;
     public int CurrentPointOnPath;
     public float Speed;
+    public LayerMask JohnSeena;
 
     // Start is called before the first frame update
     void Start()
@@ -29,11 +30,16 @@ public class EnemyController : MonoBehaviour
     {
         if(CurrentState == EnemyState.PlayerInRange)
         {
-            print("Player is nearby");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Vector2.Distance(transform.position, player.transform.position), JohnSeena);
+            Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.black);
+            if(hit.transform == player.transform)
+            {
+                print("I'll be watching you!~");
+            }
         }
         else if(CurrentState == EnemyState.WalkBackAndForth)
         {
-            print("why are we still here? just to walk?");
+            
             transform.position = Vector2.MoveTowards(transform.position, Path[CurrentPointOnPath].position, Speed * Time.deltaTime);
             if(transform.position == Path[CurrentPointOnPath].position)
             {

@@ -7,7 +7,7 @@ public class PlayerInputController : MonoBehaviour
 {
     public Controls GameControls;
     public float Directtion;
-
+    public Vector2 MousePosiion;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -18,6 +18,7 @@ public class PlayerInputController : MonoBehaviour
     void Update()
     {
         Directtion = GameControls.PlatformerControls.Move.ReadValue<float>();
+        MousePosiion = GameControls.PlatformerControls.MousePosition.ReadValue<Vector2>();
     }
 
     private void OnDisable()

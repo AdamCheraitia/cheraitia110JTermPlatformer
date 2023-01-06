@@ -53,6 +53,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""bcd3b99c-de9c-438e-80e5-3967a6f6fac2"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -70,7 +79,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c49b0225-7c93-4721-ba23-99539cee429b"",
-                    ""path"": """",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -176,6 +185,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef9f9f24-2f37-4513-9ad5-06ac53008888"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,6 +207,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_PlatformerControls_Move = m_PlatformerControls.FindAction("Move", throwIfNotFound: true);
         m_PlatformerControls_Jump = m_PlatformerControls.FindAction("Jump", throwIfNotFound: true);
         m_PlatformerControls_Shoot = m_PlatformerControls.FindAction("Shoot", throwIfNotFound: true);
+        m_PlatformerControls_MousePosition = m_PlatformerControls.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -249,6 +270,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlatformerControls_Move;
     private readonly InputAction m_PlatformerControls_Jump;
     private readonly InputAction m_PlatformerControls_Shoot;
+    private readonly InputAction m_PlatformerControls_MousePosition;
     public struct PlatformerControlsActions
     {
         private @Controls m_Wrapper;
@@ -256,6 +278,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_PlatformerControls_Move;
         public InputAction @Jump => m_Wrapper.m_PlatformerControls_Jump;
         public InputAction @Shoot => m_Wrapper.m_PlatformerControls_Shoot;
+        public InputAction @MousePosition => m_Wrapper.m_PlatformerControls_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_PlatformerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -274,6 +297,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_PlatformerControlsActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_PlatformerControlsActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_PlatformerControlsActionsCallbackInterface.OnShoot;
+                @MousePosition.started -= m_Wrapper.m_PlatformerControlsActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_PlatformerControlsActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_PlatformerControlsActionsCallbackInterface.OnMousePosition;
             }
             m_Wrapper.m_PlatformerControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -287,6 +313,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
             }
         }
     }
@@ -296,5 +325,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }

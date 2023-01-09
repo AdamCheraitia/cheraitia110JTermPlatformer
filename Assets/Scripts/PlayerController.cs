@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum PlayerState
+    {
+        Alive,
+        Dead
+    }
+    public PlayerState CurrentState;
     public Rigidbody2D rb2d;
     public float speed;
     public PlayerInputController PIC;
@@ -23,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private bool CanShoot = true;
     public int Ammo = 30;
     public int MaxAmmo = 120;
+    public int health = 5;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +60,11 @@ public class PlayerController : MonoBehaviour
             Invoke("DawnOfFriday", 2f);
             print("animation goes here");
         }
+        if(CurrentState == PlayerState.Dead)
+        {
+            SceneManager.LoadScene(0);
+        }
+        EvaluateState();
     }
 
     void FixedUpdate()
@@ -85,6 +98,13 @@ public class PlayerController : MonoBehaviour
         }
         
     }
+    private void EvaluateState()
+    {
+        if(health == 0)
+        {
+            CurrentState = PlayerState.Dead;
+        }
+    }
     private void NotFriday()
     {
         CanShoot = true;
@@ -96,4 +116,21 @@ public class PlayerController : MonoBehaviour
         MaxAmmo = MaxAmmo - (30 - Ammo);
         Ammo = 30;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            health--;
+        }
+        if(collision.gameObject.tag == "Health")
+        {
+            health++;
+        }
+        if(collision.gameObject.tag == "Ammo")
+        {
+            MaxAmmo = MaxAmmo + 10;
+        }
+    }
+
 }

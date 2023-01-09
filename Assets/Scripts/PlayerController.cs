@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         RotateVector.Normalize();
         angle = Mathf.Atan2(RotateVector.y, RotateVector.x) * Mathf.Rad2Deg;
         ArmAnchor.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        if(Ammo < 30 && Input.GetKeyDown(KeyCode.R))
+        if(Ammo < 30 && Input.GetKeyDown(KeyCode.E))
         {
             Invoke("DawnOfFriday", 2f);
             print("animation goes here");
@@ -65,6 +65,14 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(0);
         }
         EvaluateState();
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
     void FixedUpdate()

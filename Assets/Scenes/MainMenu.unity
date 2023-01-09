@@ -842,7 +842,12 @@ MonoBehaviour:
     your strength against the robot menace by scrapping as many droids as you can.\n\nContols:\nUse
     the provided W.A.S.D./ArrowKey Interactive movement unit to traverse the digital
     arena. If you need to get to high places in the Space, a Bar is located at the
-    base of the controls."
+    base of the controls. Out of ammo in the middle of combat? Don't worry, the E-Reload
+    system will fix that clip good as new! If you're ever feelig like your run is
+    going down the drain, the R-Systems SceneShifter will restart the simulator in
+    the blink of an eye. If the simulator is too much for you yellowbellies, go on
+    and try to Escape by getting up off the chair and let a real man show you how
+    it's done. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2627,7 +2632,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 559.824, y: 706.626}
+  m_SizeDelta: {x: 570.94, y: 706.626}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1963560381
 MonoBehaviour:

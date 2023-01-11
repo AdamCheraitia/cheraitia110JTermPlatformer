@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -17,7 +18,6 @@ public class PlayerController : MonoBehaviour
     public PlayerInputController PIC;
     public Vector2 Movement;
     public float JumpForce;
-    public float JumpCheckHeight;
     public LayerMask GroundMask;
     public bool OnGround;
     public Vector2 BoxCastSize;
@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
     public int Ammo = 30;
     public int MaxAmmo = 120;
     public int health = 5;
+    public Animator PlayerAnimator;
+    public int NonZeroDirection;
+    public TMP_Text HealthText;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +44,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HealthText.text = health.ToString();
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, BoxCastSize, 0, Vector2.down, 0, GroundMask);
         BoxCastDrawer.Draw(hit, transform.position, BoxCastSize, 0, Vector2.down, 0);
         if(hit.transform != null)
@@ -55,6 +59,19 @@ public class PlayerController : MonoBehaviour
         RotateVector.Normalize();
         angle = Mathf.Atan2(RotateVector.y, RotateVector.x) * Mathf.Rad2Deg;
         ArmAnchor.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        if(PIC.Directtion > 0)
+        {
+            //NonZeroDirection = 1;
+            //<GetComponent>transform.localScale
+        }
+        if(PIC.Directtion == 0)
+        {
+            PlayerAnimator.SetBool("IsWalking", false);
+        }
+        else
+        {
+            PlayerAnimator.SetBool("IsWalking", true);
+        }
         if(Ammo < 30 && Input.GetKeyDown(KeyCode.E))
         {
             Invoke("DawnOfFriday", 2f);

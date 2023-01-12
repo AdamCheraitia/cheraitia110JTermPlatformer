@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public Animator PlayerAnimator;
     public int NonZeroDirection;
     public TMP_Text HealthText;
+    public TMP_Text AmmoText;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +45,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HealthText.text = health.ToString();
+        HealthText.text = "Health:" + health.ToString();
+        AmmoText.text = Ammo.ToString() + "/" + MaxAmmo.ToString();
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, BoxCastSize, 0, Vector2.down, 0, GroundMask);
         BoxCastDrawer.Draw(hit, transform.position, BoxCastSize, 0, Vector2.down, 0);
         if(hit.transform != null)
@@ -76,10 +78,6 @@ public class PlayerController : MonoBehaviour
         {
             Invoke("DawnOfFriday", 2f);
             print("animation goes here");
-        }
-        if(CurrentState == PlayerState.Dead)
-        {
-            SceneManager.LoadScene(0);
         }
         EvaluateState();
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -151,6 +149,10 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             health--;
+            if(health <= 0)
+            {
+                SceneManager.LoadScene(2);
+            }
         }
         if(collision.gameObject.tag == "Health")
         {
@@ -162,4 +164,5 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+  
 }

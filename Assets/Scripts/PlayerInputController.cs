@@ -23,6 +23,6 @@ public class PlayerInputController : MonoBehaviour
 
     private void OnDisable()
     {
-
+        GameControls.PlatformerControls.Disable();
     }
 }

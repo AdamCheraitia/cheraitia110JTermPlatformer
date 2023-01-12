@@ -24,8 +24,12 @@ public class BulletBehavior : MonoBehaviour
         }
         if(collision.gameObject.tag == "Enemy")
         {
-            Destroy(gameObject);
             Destroy(collision.gameObject);
+            GameManager.EnemyCount++;
+            print(GameManager.EnemyCount);
+            GameManager.Score += 100;
+            Destroy(gameObject);
+            
         }
     }
 }

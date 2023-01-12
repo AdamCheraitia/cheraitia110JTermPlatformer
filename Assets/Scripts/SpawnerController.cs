@@ -36,6 +36,10 @@ public class SpawnerController : MonoBehaviour
             Invoke("HorseWalksIn", 5);
             CurrentState = ItemPresent.ItemWaiting;
         }
+        if (!Item)
+        {
+            CurrentState = ItemPresent.ItemUsed;
+        }
     }
 
     private void HorseWalksIn()

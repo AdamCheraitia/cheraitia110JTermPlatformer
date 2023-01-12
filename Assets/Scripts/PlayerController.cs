@@ -105,6 +105,8 @@ public class PlayerController : MonoBehaviour
         {
             Vector2 Jump = new Vector2(Movement.x, JumpForce);
             rb2d.AddForce(Jump, ForceMode2D.Impulse);
+            var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.Jump.ToString());
+            AudioSource.PlayClipAtPoint(clip, transform.position);
         }
     }
     private void Shoot(InputAction.CallbackContext obj)
@@ -119,6 +121,8 @@ public class PlayerController : MonoBehaviour
             CurretBullet.transform.position = Barrel.transform.position;
             CurretBullet.GetComponent<Rigidbody2D>().velocity = RotateVector * 15;
             CurretBullet.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+            var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.Shoot.ToString());
+            AudioSource.PlayClipAtPoint(clip, transform.position);
             Destroy(CurretBullet, 8f);
         }
         

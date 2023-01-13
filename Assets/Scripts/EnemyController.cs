@@ -40,6 +40,10 @@ public class EnemyController : MonoBehaviour
                 //Some how, in unholy coding fashion this mucho texto is a Raycast for if the Player is in range. And yes they can go through walls, would be too easy if they couldn't
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Vector2.Distance(transform.position, player.transform.position), JohnSeena);
                 Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.black);
+                Vector3 spaceFromTarget = player.transform.position - transform.position;
+                spaceFromTarget.Normalize();
+                float rotationZ = Mathf.Atan2(spaceFromTarget.y, spaceFromTarget.x) * Mathf.Rad2Deg - 90f;
+                transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
                 transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), Speed * Time.deltaTime);
                 if (hit.transform == player.transform)
                 {
@@ -52,15 +56,24 @@ public class EnemyController : MonoBehaviour
                 transform.position = Vector2.MoveTowards(transform.position, Path[CurrentPointOnPath].position, Speed * Time.deltaTime);
                 if (transform.position == Path[CurrentPointOnPath].position)
                 {
+                    sr.flipX = !sr.flipX;
+                    transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                     if (CurrentPointOnPath < Path.Length - 1)
                     {
                         CurrentPointOnPath++;
+                        
                     }
                     else
                     {
                         CurrentPointOnPath = 0;
+                        
                     }
                 }
+                Vector3 spaceFromTarget = Path[CurrentPointOnPath].position - transform.position;
+                spaceFromTarget.Normalize();
+                
+                //float rotationZ = Mathf.Atan2(spaceFromTarget.y, spaceFromTarget.x) * Mathf.Rad2Deg;
+                //transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
             }
         }        
         EvaluateState();

@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
     public int NonZeroDirection;
     public TMP_Text HealthText;
     public TMP_Text AmmoText;
+    private bool looking = false;
+    public GameObject ArmSprite;
+    public Animator ArmAnimator;
     //D I D Y O U K N O W: Start is called before the first frame update
     void Start()
     {
@@ -62,20 +65,17 @@ public class PlayerController : MonoBehaviour
         RotateVector.Normalize();
         angle = Mathf.Atan2(RotateVector.y, RotateVector.x) * Mathf.Rad2Deg;
         ArmAnchor.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        //This was a failed attempt at making the player rotate based on the direction you're moving;
-        //it's gonna have to be more complex now since the arm rotates too, but not by much
-        if(PIC.Directtion > 0)
-        {
-            //NonZeroDirection = 1;
-            //<GetComponent>transform.localScale
-        }
+        ArmAnchor.position = transform.position;
+        Flip();
         if(PIC.Directtion == 0)
         {
             PlayerAnimator.SetBool("IsWalking", false);
+            ArmAnimator.SetBool("IsWalking", false);
         }
         else
         {
             PlayerAnimator.SetBool("IsWalking", true);
+            ArmAnimator.SetBool("IsWalking", true);
         }
         //These two "if" statements function as the reload mechanic for the player.
         if(Ammo < 30 && Input.GetKeyDown(KeyCode.E))
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
         {
             //This is a lot. This is what goes into making you shoot.
             CanShoot = false;
-            PlayerAnimator.SetBool("Shoot", true);
+            ArmAnimator.SetBool("Shoot", true);
             Invoke("NotFriday", 0.1f);
             print("Today is Friday in California. Huh? Shoot!");
             GameObject CurretBullet = Instantiate(Bullet);
@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour
     private void NotFriday()
     {
         CanShoot = true;
-        PlayerAnimator.SetBool("Shoot", false);
+        ArmAnimator.SetBool("Shoot", false);
     }
 
     private void DawnOfFriday()
@@ -198,6 +198,17 @@ public class PlayerController : MonoBehaviour
             MaxAmmo = MaxAmmo + 10;
             var clip2 = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.PickUp.ToString());
             AudioSource.PlayClipAtPoint(clip2, transform.position);
+        }
+    }
+    private void Flip()
+    {
+        if((looking && PIC.Directtion > 0) ||(!looking && PIC.Directtion <0))
+        {
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
+            looking = !looking;
+            ArmSprite.GetComponent<SpriteRenderer>().flipY = !ArmSprite.GetComponent<SpriteRenderer>().flipY;
         }
     }
 

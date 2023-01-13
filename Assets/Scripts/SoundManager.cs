@@ -17,7 +17,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] SoundEffects;
     public Dictionary<string, AudioClip> SoundEffectDictionary = new Dictionary<string, AudioClip>();
     public static SoundManager SoundManagerInstance;
-    // Start is called before the first frame update
+    //I can't even...  This some how makes a Dictionary for Sounds??? Probably the craziest thing coded in this project.
     void Start()
     {       
         if(SoundManagerInstance == null)
@@ -32,6 +32,7 @@ public class SoundManager : MonoBehaviour
         }
         else
         {
+            //Destroys the game object if a Sound Manager is already present within the scene
             Destroy(gameObject);
         }
     }

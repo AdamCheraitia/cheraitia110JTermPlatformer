@@ -15,6 +15,7 @@ public class ItemBehavior : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //After a painstakingly long "wth Unity" during TA time, this is what controls the Items' respawning
         if(collision.gameObject.tag == "Player")
         {
             print("Peter, where'd the horse go?");
@@ -25,7 +26,9 @@ public class ItemBehavior : MonoBehaviour
     }
     public void TurnOn()
     {
+        //The horse
         sr.enabled = true;
         bc2d.enabled = true;
+        print("Peter. The horse is here.");
     }
 }

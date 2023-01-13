@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    //Where do I even begin with this one? There's just A LOT here and its not even like the code controling it JUST VARIABLES!
     public enum PlayerState
     {
         Alive,
@@ -35,16 +36,15 @@ public class PlayerController : MonoBehaviour
     public int NonZeroDirection;
     public TMP_Text HealthText;
     public TMP_Text AmmoText;
-    // Start is called before the first frame update
+    //D I D Y O U K N O W: Start is called before the first frame update
     void Start()
     {
         PIC.GameControls.PlatformerControls.Jump.performed += Jump;
         PIC.GameControls.PlatformerControls.Shoot.performed += Shoot;
     }
-
-    // Update is called once per frame
     void Update()
     {
+        //So aside from assigning the health text, this here controls the Boxcast (raycast but box) for if the player can jump
         HealthText.text = "Health: " + health.ToString();
         AmmoText.text = Ammo.ToString() + "/" + MaxAmmo.ToString();
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, BoxCastSize, 0, Vector2.down, 0, GroundMask);
@@ -57,10 +57,13 @@ public class PlayerController : MonoBehaviour
         {
             OnGround = false;
         }
+        //This chunk here is I think the entire code for roating the are to shoot
         RotateVector = Camera.main.ScreenToWorldPoint(PIC.MousePosiion) - transform.position;
         RotateVector.Normalize();
         angle = Mathf.Atan2(RotateVector.y, RotateVector.x) * Mathf.Rad2Deg;
         ArmAnchor.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        //This was a failed attempt at making the player rotate based on the direction you're moving;
+        //it's gonna have to be more complex now since the arm rotates too, but not by much
         if(PIC.Directtion > 0)
         {
             //NonZeroDirection = 1;
@@ -74,12 +77,19 @@ public class PlayerController : MonoBehaviour
         {
             PlayerAnimator.SetBool("IsWalking", true);
         }
+        //These two "if" statements function as the reload mechanic for the player.
         if(Ammo < 30 && Input.GetKeyDown(KeyCode.E))
         {
             Invoke("DawnOfFriday", 2f);
             print("animation goes here");
         }
+        if(Ammo <= 0 && Input.GetMouseButtonDown(1))
+        {
+            Invoke("DawnOfFriday", 2f);
+            print("animation goes here");
+        }
         EvaluateState();
+        //I don't need to explain what this does, so I wont
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
@@ -92,6 +102,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        //So, this is controling the player's movement. It basically uses the variables from the PlayerInputController to do movement.
         float XMovement = speed * Time.deltaTime * PIC.Directtion; //something
         Movement = new Vector2(XMovement, rb2d.velocity.y);
         rb2d.velocity = Movement;
@@ -99,6 +110,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext obj)
     {
+        //This here Jump function uses AddForce to make you jump. Also it plays a sound!
         if(OnGround == true)
         {
             Vector2 Jump = new Vector2(Movement.x, JumpForce);
@@ -111,7 +123,9 @@ public class PlayerController : MonoBehaviour
     {
         if (CanShoot && Ammo > 0)
         {
+            //This is a lot. This is what goes into making you shoot.
             CanShoot = false;
+            PlayerAnimator.SetBool("Shoot", true);
             Invoke("NotFriday", 0.1f);
             print("Today is Friday in California. Huh? Shoot!");
             GameObject CurretBullet = Instantiate(Bullet);
@@ -127,7 +141,8 @@ public class PlayerController : MonoBehaviour
     }
     private void EvaluateState()
     {
-        if(health == 0)
+        //Here this here makes the player dead. As of writing this it says "health == 0" so I should change that
+        if(health <= 0)
         {
             CurrentState = PlayerState.Dead;
         }
@@ -135,6 +150,7 @@ public class PlayerController : MonoBehaviour
     private void NotFriday()
     {
         CanShoot = true;
+        PlayerAnimator.SetBool("Shoot", false);
     }
 
     private void DawnOfFriday()
@@ -149,6 +165,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log(collision.gameObject.tag);
         if(collision.gameObject.tag == "Enemy")
         {
+            //This basically says that you touched and enemy and lost health. Also, its what sends you to the Lose Screen.
             health--;
             var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.PlayerHit.ToString());
             AudioSource.PlayClipAtPoint(clip, transform.position);
@@ -163,14 +180,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Health Pickup that lets you gain health.
         if (collision.gameObject.tag == "Health")
         {
             health++;
+            if(health > 5)
+            {
+                health = 5;
+            }
             var clip2 = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.PickUp.ToString());
             AudioSource.PlayClipAtPoint(clip2, transform.position);
             Debug.Log("Touched");
         }
-
+        //I am very proud to say that I made a functioning ammo system FIRST TRY! I was very happen when I saw those numbers change, a feeling like no other :)
         if (collision.gameObject.tag == "Ammo")
         {
             MaxAmmo = MaxAmmo + 10;

@@ -14,7 +14,7 @@ public class MainMenuController : MonoBehaviour
    {
         Application.Quit();
    }
-
+    //Plays a sound when you press the button
    public void Pressed()
     {
         var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.Button.ToString());

@@ -18,41 +18,50 @@ public class EnemyController : MonoBehaviour
     public int CurrentPointOnPath;
     public float Speed;
     public LayerMask JohnSeena;
+    private SpriteRenderer sr;
+    private BoxCollider2D bc2d;
+
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        sr = GetComponent<SpriteRenderer>();
+        bc2d = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(CurrentState == EnemyState.PlayerInRange)
+        if(bc2d.enabled == true)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Vector2.Distance(transform.position, player.transform.position), JohnSeena);
-            Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.black);
-            if(hit.transform == player.transform)
+            if (CurrentState == EnemyState.PlayerInRange)
             {
-                print("I'll be watching you!~");
-            }
-        }
-        else if(CurrentState == EnemyState.WalkBackAndForth)
-        {
-            
-            transform.position = Vector2.MoveTowards(transform.position, Path[CurrentPointOnPath].position, Speed * Time.deltaTime);
-            if(transform.position == Path[CurrentPointOnPath].position)
-            {
-                if(CurrentPointOnPath < Path.Length -1)
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, Vector2.Distance(transform.position, player.transform.position), JohnSeena);
+                Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.black);
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, player.transform.position.y), Speed * Time.deltaTime);
+                if (hit.transform == player.transform)
                 {
-                    CurrentPointOnPath++;
-                }
-                else
-                {
-                    CurrentPointOnPath = 0;
+                    print("I'll be watching you!~");
                 }
             }
-        }
+            else if (CurrentState == EnemyState.WalkBackAndForth)
+            {
+
+                transform.position = Vector2.MoveTowards(transform.position, Path[CurrentPointOnPath].position, Speed * Time.deltaTime);
+                if (transform.position == Path[CurrentPointOnPath].position)
+                {
+                    if (CurrentPointOnPath < Path.Length - 1)
+                    {
+                        CurrentPointOnPath++;
+                    }
+                    else
+                    {
+                        CurrentPointOnPath = 0;
+                    }
+                }
+            }
+        }        
         EvaluateState();
     }
     private void EvaluateState()
@@ -66,5 +75,25 @@ public class EnemyController : MonoBehaviour
         {
             CurrentState = EnemyState.WalkBackAndForth;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Bullet")
+        {
+            sr.enabled = false;
+            bc2d.enabled = false;
+            Invoke("Respawn", 10f);
+            var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.RobotScream.ToString());
+            AudioSource.PlayClipAtPoint(clip, transform.position);
+        }
+    }
+
+    private void Respawn()
+    {
+        sr.enabled = true;
+        bc2d.enabled = true;
+        var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.RobotIdle.ToString());
+        AudioSource.PlayClipAtPoint(clip, transform.position);
     }
 }

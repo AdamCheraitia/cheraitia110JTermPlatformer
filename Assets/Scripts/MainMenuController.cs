@@ -14,4 +14,10 @@ public class MainMenuController : MonoBehaviour
    {
         Application.Quit();
    }
+
+   public void Pressed()
+    {
+        var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.Button.ToString());
+        AudioSource.PlayClipAtPoint(clip, transform.position);
+    }
 }

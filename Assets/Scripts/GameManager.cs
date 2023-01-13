@@ -27,5 +27,6 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(3);
         }
+        EnemyText.text = EnemyCount.ToString() + "/20";
     }
 }

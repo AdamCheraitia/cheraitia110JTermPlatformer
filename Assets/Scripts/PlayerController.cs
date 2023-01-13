@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HealthText.text = "Health:" + health.ToString();
+        HealthText.text = "Health: " + health.ToString();
         AmmoText.text = Ammo.ToString() + "/" + MaxAmmo.ToString();
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, BoxCastSize, 0, Vector2.down, 0, GroundMask);
         BoxCastDrawer.Draw(hit, transform.position, BoxCastSize, 0, Vector2.down, 0);
@@ -119,8 +119,8 @@ public class PlayerController : MonoBehaviour
             CurretBullet.transform.position = Barrel.transform.position;
             CurretBullet.GetComponent<Rigidbody2D>().velocity = RotateVector * 15;
             CurretBullet.transform.rotation = Quaternion.Euler(0, 0, angle - 90);
-            var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.Shoot.ToString());
-            AudioSource.PlayClipAtPoint(clip, transform.position);
+            var clip3 = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.Shoot.ToString());
+            AudioSource.PlayClipAtPoint(clip3, transform.position);
             Destroy(CurretBullet, 8f);
         }
         
@@ -146,23 +146,37 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision.gameObject.tag);
         if(collision.gameObject.tag == "Enemy")
         {
             health--;
-            if(health <= 0)
+            var clip = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.PlayerHit.ToString());
+            AudioSource.PlayClipAtPoint(clip, transform.position);
+            if (health <= 0)
             {
                 SceneManager.LoadScene(2);
             }
         }
-        if(collision.gameObject.tag == "Health")
+      
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Health")
         {
             health++;
+            var clip2 = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.PickUp.ToString());
+            AudioSource.PlayClipAtPoint(clip2, transform.position);
+            Debug.Log("Touched");
         }
-        if(collision.gameObject.tag == "Ammo")
+
+        if (collision.gameObject.tag == "Ammo")
         {
             MaxAmmo = MaxAmmo + 10;
+            var clip2 = SoundManager.SoundManagerInstance.GetAudioClipFromDictionary(SoundManager.SoundEffectName.PickUp.ToString());
+            AudioSource.PlayClipAtPoint(clip2, transform.position);
         }
     }
 
-  
 }

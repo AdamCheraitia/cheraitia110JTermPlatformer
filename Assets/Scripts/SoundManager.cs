@@ -10,7 +10,9 @@ public class SoundManager : MonoBehaviour
         RobotScream,
         RobotIdle,
         PlayerHit,
-        Jump
+        Jump,
+        Button,
+        PickUp
     }
     public AudioClip[] SoundEffects;
     public Dictionary<string, AudioClip> SoundEffectDictionary = new Dictionary<string, AudioClip>();

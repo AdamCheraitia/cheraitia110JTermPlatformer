@@ -611,12 +611,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Programing - Adam Cheraitia
 
-    Art - Adam Cheraitia
+    Character Art - Adam Cheraitia
 
-    Level Design
-    - Adam Cheraitia
+    Enviornment
+    Art - Super Icon Ltd.
 
-    Sound Design - Adam Cheraitia
+    Level Design - Adam Cheraitia
+
+    Sound Design -
+    Users on Freesound.org
 
     Music - Anders Bronton'
   m_isRightToLeft: 0
@@ -839,15 +842,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Welcome Recruit to the Droid Combat Simulator, though most people call
     it the Bot Basher. \nDuring this exersize you will have three minutes to test
-    your strength against the robot menace by scrapping as many droids as you can.\n\nContols:\nUse
-    the provided W.A.S.D./ArrowKey Interactive movement unit to traverse the digital
-    arena. If you need to get to high places in the Space, a Bar is located at the
-    base of the controls. Out of ammo in the middle of combat? Don't worry, the E-Reload
-    system will fix that clip good as new! If you're ever feelig like your run is
-    going down the drain, the R-Systems SceneShifter will restart the simulator in
-    the blink of an eye. If the simulator is too much for you yellowbellies, go on
-    and try to Escape by getting up off the chair and let a real man show you how
-    it's done. "
+    your strength against the robot menace by scrapping as many droids as you can.\n\nContols:\nWASD/Arrow
+    Keys - Movement\nE - Reload\nSpace - Jump\nEsc. - Quit\nR - Reload Scene"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1285,6 +1281,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 795060670}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: Pressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1818,6 +1826,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 795060670}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: Pressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &959860608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2211,6 +2231,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 795060670}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: Pressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1578448219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2337,6 +2369,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 795060670}
+        m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
+        m_MethodName: Pressed
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2857,6 +2901,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5774602267976865152, guid: 58b9843366a2c7840b8a5286197651e3, type: 3}
+      propertyPath: SoundEffects.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5774602267976865152, guid: 58b9843366a2c7840b8a5286197651e3, type: 3}
+      propertyPath: SoundEffects.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a487d70b9d995e4fb9b1abb338356f0, type: 3}
+    - target: {fileID: 5774602267976865152, guid: 58b9843366a2c7840b8a5286197651e3, type: 3}
+      propertyPath: SoundEffects.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8a221313d3d62a347828bb2ec3428000, type: 3}
+    - target: {fileID: 5774602267976865152, guid: 58b9843366a2c7840b8a5286197651e3, type: 3}
+      propertyPath: SoundEffects.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8a3526fd715b2d4439a7a49ec5ec1165, type: 3}
+    - target: {fileID: 5774602267976865152, guid: 58b9843366a2c7840b8a5286197651e3, type: 3}
+      propertyPath: SoundEffects.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 61e69a05af194614ca299769b9ebe6ac, type: 3}
+    - target: {fileID: 5774602267976865152, guid: 58b9843366a2c7840b8a5286197651e3, type: 3}
+      propertyPath: SoundEffects.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 61e69a05af194614ca299769b9ebe6ac, type: 3}
+    - target: {fileID: 5774602267976865152, guid: 58b9843366a2c7840b8a5286197651e3, type: 3}
+      propertyPath: SoundEffects.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 700ce9ea209527c4394735431719f7c6, type: 3}
     - target: {fileID: 5774602267976865153, guid: 58b9843366a2c7840b8a5286197651e3, type: 3}
       propertyPath: m_Name
       value: SoundManager
